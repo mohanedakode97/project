@@ -173,7 +173,7 @@ db 0x55, 0xAA
         pop ebp
          cmp ebp,9
         
-         jg end
+         jge end
          
          
           check:
@@ -184,23 +184,23 @@ db 0x55, 0xAA
          in al,0x60
          cmp al,0x80
          ja check
-         cmp al,0x02   ;A
+         cmp al,0x47  ;A
          je first
-         cmp al,0x03  ;B
+         cmp al,0x48 ;B
          je second
-         cmp al,0x04  ;c
+         cmp al,0x49  ;c
          je third
-         cmp al,0x05   ;d
+         cmp al,0x4b   ;d
          je fourth
-         cmp al,0x06   ;e
+         cmp al,0x4c   ;e
          je fifth
-         cmp al,0x07   ;f
+         cmp al,0x4d   ;f
          je six
-         cmp al,0x08   ;g
+         cmp al,0x4f   ;g
          je seven
-         cmp al,0x09   ;h
+         cmp al,0x50   ;h
          je eight
-         cmp al,0x0A   ;i
+         cmp al,0x51   ;i
          je nine
        end:
        ;ret
