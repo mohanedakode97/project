@@ -1,3 +1,4 @@
+start:
 bits 16
 org 0x7C00
 
@@ -27,6 +28,7 @@ db 0x55, 0xAA
 	
 	;WRITE YOUR CODE HERE
        ; first column
+       
         xor ecx,ecx
         mov edi, 0xB8004
         add edi,0x32 
@@ -76,6 +78,124 @@ db 0x55, 0xAA
        inc ecx
        cmp ecx,75
        jl d
+       ;Lastrow
+       mov edi,0xB8F2A
+       mov al ,'T'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'o'
+       mov [edi] , al
+       add edi , 2
+       mov al ,' '
+       mov [edi] , al
+       add edi , 2
+       mov al ,'R'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'e'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'s'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'t'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'a'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'r'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'t'
+       mov [edi] , al
+       add edi , 2
+       mov al ,' '
+       mov [edi] , al
+       add edi , 2
+       mov al ,'T'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'h'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'e'
+       mov [edi] , al
+       add edi , 2
+       mov al ,' '
+       mov [edi] , al
+       add edi , 2
+       mov al ,'G'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'a'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'m'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'e'
+       mov [edi] , al
+       add edi , 2
+       mov al ,' '
+       mov [edi] , al
+       add edi , 2
+       mov al ,'P'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'l'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'e'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'a'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'s'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'e'
+       mov [edi] , al
+       add edi , 2
+       mov al ,' '
+       mov [edi] , al
+       add edi , 2
+       mov al ,'P'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'r'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'e'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'s'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'s'
+       mov [edi] , al
+       add edi , 2
+       mov al ,' '
+       mov [edi] , al
+       add edi , 2
+       mov al ,'E'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'n'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'t'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'e'
+       mov [edi] , al
+       add edi , 2
+       mov al ,'r'
+       mov [edi] , al
+       add edi , 2
+       
+       
        mov ebp,0
        jmp check
        
@@ -255,6 +375,7 @@ db 0x55, 0xAA
          jne column1
          cmp byte[arr2+8],'X'
          jne column1
+          mov byte[win],'X'
          jmp winrow3
          
            column1:
@@ -427,7 +548,26 @@ db 0x55, 0xAA
          je eight
          cmp al,0x51   ;3
          je nine
+         cmp al,0x1C ;Enter (to rsest)
+         je Restart
       jmp check
+      
+     
+   Restart:
+     mov ebp , 0
+     mov ecx ,0
+      mov edi,0xB8000
+      inc edi
+      Res:
+      mov al,0x0f
+      mov [edi] ,al
+      add edi , 2
+      cmp edi , 0xB8fff
+      jl Res
+      jmp start
+      
+      
+      
       
        ;drawing x
        drawx:
@@ -538,7 +678,7 @@ db 0x55, 0xAA
        inc ecx
        cmp ecx,75
        jl s
-       jmp kl
+      
        cmp byte[win],'X'
        je drawxwin
        jne drawowin
@@ -556,7 +696,7 @@ winrow2:
        inc ecx
        cmp ecx,75
        jl t
-       jmp kl
+       
          cmp byte[win],'X'
        je drawxwin
        jne drawowin
@@ -573,7 +713,11 @@ winrow3:
        inc ecx
        cmp ecx,75
        jl u
-jmp kl
+          cmp byte[win],'X'
+       je drawxwin
+       jne drawowin
+       
+
 wincolumn1:
         xor ecx,ecx
         mov edi, 0xB8000
@@ -586,7 +730,7 @@ wincolumn1:
        inc ecx
         cmp ecx,24
        jl v
-       jmp kl
+       
        cmp byte[win],'X'
        je drawxwin
        jne drawowin
@@ -603,7 +747,7 @@ wincolumn1:
        inc ecx
         cmp ecx,24
        jl w
-       jmp kl
+       
        cmp byte[win],'X'
        je drawxwin
        jne drawowin
@@ -620,42 +764,351 @@ wincolumn1:
        inc ecx
         cmp ecx,24
        jl x
-       jmp kl
+      
        cmp byte[win],'X'
        je drawxwin
        jne drawowin
        
        windiag1:
-     ;  mov edi,0xB8536
-;       
-;       xor ecx,ecx
-;      xor ebx,ebx
-;      inc edi
-;         add ebx,0xA0
-;         add ebx,2
-;         
-;        ee:
-;         
-;         mov al,0x60
-;         mov [edi],al
-;         
-;         add edi,ebx
-;         inc ecx
-;         cmp ecx,25
-;         jl ee
-       jmp kl
+   
+       
        cmp byte[win],'X'
        je drawxwin
        jne drawowin
        
         windiag2:
-        drawxwin:
         
+          cmp byte[win],'X'
+       je drawxwin
+       jne drawowin
+        drawxwin:
+         ;drawx
+       mov edi, 0xB800A
+       add edi,0x460
+       push edi
+      xor ecx,ecx
+      xor ebx,ebx
+      inc edi
+         add ebx,0xA0
+         add ebx,2
+         
+        ex:
+         
+         mov al,0xbb
+         mov [edi],al
+         
+         add edi,ebx
+         inc ecx
+         cmp ecx,11
+         jl ex
+         
+         xor ecx,ecx
+         xor ebx,ebx
+         pop edi
+         inc edi
+         
+         add edi,0x14
+         add ebx,0xA0
+         sub ebx,2
+         
+        fx:
+         
+         mov al,0xbb
+         mov [edi],al
+         add edi,ebx
+         inc ecx
+         cmp ecx,11
+         jl fx
+       jmp drawWIN
+       
         
         drawowin:
+        ; drawo
+         ;drawing owin
+         mov edi, 0xB800A
+         add edi,0x460
+         push edi
+         xor ecx,ecx
+         xor ebx,ebx
+         add edi, 0x0C
+         inc edi
+         add ebx,0xA0
+         sub ebx,2
+         mov esi,4
+         xor edx,edx
+         mov edx,2
+         
+        go:
+        push edi
+         mov al,0xbb
+         mov [edi],al
+         add edi,edx
+         add edx,esi
+         mov [edi],al
+         pop edi
+         add edi,ebx
+         inc ecx
+         cmp ecx,6
+         jl go
+         
+         pop edi
+         xor ecx,ecx
+         xor ebx,ebx
+         add edi,0x6E0
+         add edi,0x0C
+         inc edi
+         add ebx,0xA0
+         add ebx,2
+         mov esi,4
+         xor edx,edx
+         mov edx,2
+         
+        ho:
+        push edi
+         mov al,0xbb
+         mov [edi],al
+         add edi,edx
+         add edx,esi
+         mov [edi],al
+         pop edi
+         sub edi,ebx
+         inc ecx
+         cmp ecx,6
+         jl ho
+        jmp drawWIN 
+       
+       
+       
         nowin:
        
+       ;draw NO
+       mov edi, 0xB8002
+       add edi,0x460
+       xor ecx,ecx 
+       inc edi
+        jj1:
+        mov al,0xbb
+        mov [edi],al
+        add edi,0xA0 ;160
+       inc ecx
+        cmp ecx,11
+       jl jj1
        
+       mov edi, 0xB8004
+       add edi,0x460
+      xor ecx,ecx
+      xor ebx,ebx
+      inc edi
+         add ebx,0xA0
+         add ebx,2
+         
+        ll1:
+         
+         mov al,0xbb
+         mov [edi],al
+         
+         add edi,ebx
+         inc ecx
+         cmp ecx,11
+         jl ll1
+       
+       mov edi, 0xB801A
+       add edi,0x460
+       xor ecx,ecx 
+       inc edi
+        kk1:
+        mov al,0xbb
+        mov [edi],al
+        add edi,0xA0 ;160
+       inc ecx
+        cmp ecx,11
+       jl kk1
+       
+       mov edi, 0xB8002
+         add edi,0x460
+         add edi,0x1A
+         push edi
+         xor ecx,ecx
+         xor ebx,ebx
+         add edi, 0x0C
+         inc edi
+         add ebx,0xA0
+         sub ebx,2
+         mov esi,4
+         xor edx,edx
+         mov edx,2
+         
+        gg1:
+        push edi
+         mov al,0xbb
+         mov [edi],al
+         add edi,edx
+         add edx,esi
+         mov [edi],al
+         pop edi
+         add edi,ebx
+         inc ecx
+         cmp ecx,6
+         jl gg1
+         
+         pop edi
+         xor ecx,ecx
+         xor ebx,ebx
+         add edi,0x6E0
+         add edi,0x0C
+         inc edi
+         add ebx,0xA0
+         add ebx,2
+         mov esi,4
+         xor edx,edx
+         mov edx,2
+         
+        hh1:
+        push edi
+         mov al,0xbb
+         mov [edi],al
+         add edi,edx
+         add edx,esi
+         mov [edi],al
+         pop edi
+         sub edi,ebx
+         inc ecx
+         cmp ecx,6
+         jl hh1
+         jmp drawWIN
+       drawWIN:
+       ;draw W
+       mov edi, 0xB8036
+       add edi,0x460
+       
+       push edi
+      xor ecx,ecx
+      xor ebx,ebx
+      inc edi
+         add ebx,0xA0
+         add ebx,2
+         
+        aa:
+         
+         mov al,0xbb
+         mov [edi],al
+         
+         add edi,ebx
+         inc ecx
+         cmp ecx,11
+         jl aa
+         
+         xor ecx,ecx
+         xor ebx,ebx
+         pop edi
+         inc edi
+         
+         add edi,0x38
+         add ebx,0xA0
+         sub ebx,2
+         
+        bb:
+         
+         mov al,0xbb
+         mov [edi],al
+         add edi,ebx
+         inc ecx
+         cmp ecx,11
+         jl bb
+       
+       mov edi, 0xB8052
+       add edi,0x820
+       
+       push edi
+      xor ecx,ecx
+      xor ebx,ebx
+      inc edi
+         add ebx,0xA0
+         add ebx,2
+         
+        gg:
+         
+         mov al,0xbb
+         mov [edi],al
+         
+         add edi,ebx
+         inc ecx
+         cmp ecx,4
+         jl gg
+         
+         xor ecx,ecx
+         xor ebx,ebx
+         pop edi
+         inc edi
+         
+         add ebx,0xA0
+         sub ebx,2
+         
+        hh:
+         
+         mov al,0xbb
+         mov [edi],al
+         add edi,ebx
+         inc ecx
+         cmp ecx,4
+         jl hh  
+         
+          ;draw I
+       mov edi, 0xB807A
+       add edi,0x460
+       xor ecx,ecx 
+       inc edi
+        ij:
+        mov al,0xbb
+        mov [edi],al
+        add edi,0xA0 ;160
+       inc ecx
+        cmp ecx,11
+       jl ij
+       
+       ;draw N
+       mov edi, 0xB8084
+       add edi,0x460
+       xor ecx,ecx 
+       inc edi
+        jj:
+        mov al,0xbb
+        mov [edi],al
+        add edi,0xA0 ;160
+       inc ecx
+        cmp ecx,11
+       jl jj
+       
+       mov edi, 0xB8086
+       add edi,0x460
+      xor ecx,ecx
+      xor ebx,ebx
+      inc edi
+         add ebx,0xA0
+         add ebx,2
+         
+        ll:
+         
+         mov al,0xbb
+         mov [edi],al
+         
+         add edi,ebx
+         inc ecx
+         cmp ecx,11
+         jl ll
+       
+       mov edi, 0xB809C
+       add edi,0x460
+       xor ecx,ecx 
+       inc edi
+        kk:
+        mov al,0xbb
+        mov [edi],al
+        add edi,0xA0 ;160
+       inc ecx
+        cmp ecx,11
+       jl kk
+       jmp kl
        
         
         
@@ -664,8 +1117,18 @@ wincolumn1:
 arr: db '0','0','0','0','0','0','0','0','0'
 arr2: db '0','0','0','0','0','0','0','0','0'
 win: db '0'
-   kl:     
-
+   kl: 
+   Checkend:    
+         in al,0x64
+         and al,0x01
+         jz Checkend
+         in al,0x60
+         cmp al,0x80
+         ja Checkend
+         cmp al,0x1C ;Enter (to rsest)
+         je Restart
+         jmp Checkend
+         
 times (0x400000 - 512) db 0
 
 db 	0x63, 0x6F, 0x6E, 0x65, 0x63, 0x74, 0x69, 0x78, 0x00, 0x00, 0x00, 0x02
